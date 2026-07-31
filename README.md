@@ -1,3 +1,7 @@
+<img width="902" height="358" alt="1" src="https://github.com/user-attachments/assets/fb9137a5-a505-4fd6-a753-880c6fb1254b" />
+
+<img width="816" height="358" alt="2" src="https://github.com/user-attachments/assets/d99ecdac-ae4c-48e2-b925-ce80e3dc3223" />
+
 # Gmail Unread in Bookmarks
 
 A tiny Firefox extension that keeps your Gmail unread count visible on the bookmarks toolbar. It renames one of your bookmarks once a minute, so the number is just *there* — no tab to open, no page to refresh. When there is nothing unread it says `nothing`.
