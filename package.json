@@ -1,0 +1,49 @@
+{
+  "name": "unread-in-bookmarks-for-gmail",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Keeps your Gmail unread counts on the Firefox bookmarks toolbar",
+  "license": "MIT",
+  "author": "Vlad Pohorilets",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kvachikk/unread-in-bookmarks-for-gmail.git"
+  },
+  "homepage": "https://github.com/kvachikk/unread-in-bookmarks-for-gmail",
+  "bugs": {
+    "url": "https://github.com/kvachikk/unread-in-bookmarks-for-gmail/issues"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "lint": "eslint . && prettier --check \"**/*.{js,mjs,json,md,css,html}\" && npm run lint:ext && npm run lint:privacy",
+    "lint:ext": "web-ext lint -s src",
+    "lint:privacy": "node tools/check-privacy.mjs",
+    "fix": "eslint . --fix && prettier --write \"**/*.{js,mjs,json,md,css,html}\"",
+    "test": "node --test",
+    "package": "web-ext build -s src -a artifacts --overwrite-dest",
+    "start": "web-ext run -s src",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,mjs}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,css,html}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "21.2.1",
+    "@commitlint/config-conventional": "21.2.0",
+    "eslint": "10.8.0",
+    "eslint-config-metarhia": "9.1.9",
+    "globals": "17.8.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.3.0",
+    "prettier": "3.9.6",
+    "web-ext": "10.5.0"
+  }
+}
