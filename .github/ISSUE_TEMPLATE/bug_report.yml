@@ -1,0 +1,60 @@
+name: Bug report
+description: Something does not work
+labels: [bug]
+body:
+  - type: input
+    id: firefox
+    attributes:
+      label: Firefox version
+      placeholder: '142.0 on Linux'
+    validations:
+      required: true
+
+  - type: input
+    id: mailboxes
+    attributes:
+      label: How many mailboxes are configured
+      placeholder: '2 — account 1 inbox and account 2 label "work"'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: symptom
+    attributes:
+      label: What the bookmark shows
+      options:
+        - A dash (—)
+        - Stale counts that never change
+        - Wrong counts
+        - No bookmark appears at all
+        - Something else
+    validations:
+      required: true
+
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got.
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Background console output
+      description: >
+        about:debugging → This Firefox → Inspect on this extension → Console.
+        Lines are prefixed with [unread-in-bookmarks]. Redact anything you would
+        rather not share.
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: signed-in
+    attributes:
+      label: Confirm
+      options:
+        - label: I am signed in to Gmail in this same Firefox profile
+          required: true

@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npx web-ext build -s src -a artifacts --overwrite-dest
+
+      # Published so anyone can rebuild and compare against the signed add-on.
+      - name: Checksum
+        run: |
+          cd artifacts
+          sha256sum ./*.zip | tee SHA256SUMS
+
+      - uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            artifacts/*.zip
+            artifacts/SHA256SUMS
+          generate_release_notes: true
