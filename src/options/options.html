@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unread in Bookmarks for Gmail — Settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <section>
+        <h1>Mailboxes</h1>
+        <p class="hint">
+          Each mailbox gets its own bookmark on the toolbar. Add one per
+          account, or one per label, or both.
+        </p>
+        <div id="mailboxes" class="mailboxes"></div>
+        <div>
+          <button type="button" id="add" class="ghost">Add a mailbox</button>
+        </div>
+      </section>
+
+      <section>
+        <h1>How often it refreshes</h1>
+        <label class="row">
+          <input type="number" id="interval" min="1" max="60" step="1" />
+          <span>minutes between checks</span>
+        </label>
+        <p class="hint">
+          Firefox clamps anything below one minute. The interval applies to
+          every mailbox.
+        </p>
+      </section>
+
+      <footer>
+        <button type="button" id="reset" class="ghost">Restore defaults</button>
+        <span
+          class="status"
+          id="status"
+          role="status"
+          aria-live="polite"
+        ></span>
+      </footer>
+    </main>
+
+    <template id="mailbox-template">
+      <article class="mailbox">
+        <header>
+          <span class="title" data-role="title"></span>
+          <button
+            type="button"
+            class="ghost remove"
+            data-role="remove"
+            title="Remove this mailbox and its bookmark"
+          >
+            Remove
+          </button>
+        </header>
+
+        <label class="row">
+          <span class="name">Account</span>
+          <select data-role="account"></select>
+        </label>
+
+        <label class="row">
+          <span class="name">Label</span>
+          <input type="text" data-role="label" placeholder="Inbox" />
+        </label>
+
+        <label class="row">
+          <span class="name">With mail</span>
+          <input type="text" data-role="template" />
+        </label>
+
+        <label class="row">
+          <span class="name">When empty</span>
+          <input type="text" data-role="zero" />
+        </label>
+
+        <p class="preview" data-role="preview"></p>
+      </article>
+    </template>
+
+    <script src="../lib/unread.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>

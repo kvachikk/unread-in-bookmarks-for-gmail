@@ -1,0 +1,172 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1c1b22;
+  --muted: #5b5b66;
+  --line: #d7d7db;
+  --accent: #c0392b;
+  --surface: #f7f7f8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1b22;
+    --fg: #fbfbfe;
+    --muted: #b1b1bb;
+    --line: #3a3944;
+    --accent: #ef8a7f;
+    --surface: #26252d;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px;
+  min-width: 420px;
+  font:
+    13px/1.5 system-ui,
+    sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 480px;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.mailboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mailbox {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.mailbox header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mailbox .title {
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.name {
+  flex: 0 0 84px;
+  color: var(--muted);
+}
+
+input[type='text'] {
+  flex: 1;
+  min-width: 0;
+}
+
+input[type='text'],
+input[type='number'],
+select {
+  padding: 4px 6px;
+  color: inherit;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+}
+
+input[type='number'] {
+  width: 64px;
+}
+
+code {
+  padding: 1px 4px;
+  background: var(--surface);
+  border-radius: 3px;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+}
+
+.preview {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  white-space: pre;
+  overflow-x: auto;
+}
+
+footer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.ghost {
+  padding: 5px 10px;
+  color: inherit;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.ghost:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.ghost:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.remove {
+  padding: 2px 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.status {
+  color: var(--accent);
+  font-size: 12px;
+}
