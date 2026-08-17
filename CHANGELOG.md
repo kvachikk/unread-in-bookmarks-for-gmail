@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased][unreleased]
 
+## [1.2.0][] - 2026-08-17
+
 Support for Chrome and the other Chromium browsers, alongside Firefox. The
 extension itself behaves exactly as before in Firefox; everything below is
 about making the same source run in two browsers.
@@ -85,6 +87,8 @@ now a settings page.
   not be read; only the latter falls back to `—`.
 
 [unreleased]:
-  https://github.com/kvachikk/unread-in-bookmarks-for-gmail/compare/v1.1.0...HEAD
+  https://github.com/kvachikk/unread-in-bookmarks-for-gmail/compare/v1.2.0...HEAD
+[1.2.0]:
+  https://github.com/kvachikk/unread-in-bookmarks-for-gmail/releases/tag/v1.2.0
 [1.1.0]:
   https://github.com/kvachikk/unread-in-bookmarks-for-gmail/releases/tag/v1.1.0
