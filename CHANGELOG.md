@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased][unreleased]
 
+Support for Chrome and the other Chromium browsers, alongside Firefox. The
+extension itself behaves exactly as before in Firefox; everything below is
+about making the same source run in two browsers.
+
+### Added
+
+- Chromium support. `src/manifest.chrome.json` declares an MV3
+  `service_worker`, `src/manifest.firefox.json` keeps the `scripts` event page
+  and the `browser_specific_settings` block, and `npm run build` writes
+  `dist/chrome/` and `dist/firefox/` from the same sources. There is still no
+  bundler, transpiler or minifier.
+- `lib/browser.js`, aliasing `chrome` to `browser` where the former is what the
+  browser provides. No polyfill is bundled: under MV3 both browsers return
+  promises from every API this extension calls.
+- `lib/bookmarks-bar.js`, which resolves the bookmarks toolbar rather than
+  assuming its id. Firefox names that folder `toolbar_____` and Chromium calls
+  it `1`, so the id that used to be a constant is now looked up in the tree.
+
+### Changed
+
+- The background script and the shared helpers are ES modules, loaded as
+  `"type": "module"` by both browsers. This replaces the classic scripts that
+  shared one global scope through the manifest's `scripts` array.
+- The privacy check runs against both manifests, so a promise kept in the
+  Firefox build cannot be quietly dropped from the Chrome one.
+
 ## [1.1.0][] - 2026-08-03
 
 First release submitted to addons.mozilla.org. The extension was renamed from

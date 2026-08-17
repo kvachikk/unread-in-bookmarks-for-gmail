@@ -1,9 +1,7 @@
-'use strict';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 
-const test = require('node:test');
-const assert = require('node:assert/strict');
-
-const {
+import {
   DEFAULT_WATCHER,
   DEFAULT_SETTINGS,
   MAX_WATCHERS,
@@ -13,7 +11,7 @@ const {
   formatTitle,
   describeWatcher,
   normalizeSettings,
-} = require('../../src/lib/unread.js');
+} from '../../src/lib/unread.js';
 
 const watcher = (over = {}) => ({ ...DEFAULT_WATCHER, id: 'w', ...over });
 

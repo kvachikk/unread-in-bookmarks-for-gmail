@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Unread in Bookmarks for Gmail
  *
@@ -7,15 +5,26 @@
  * unread count into the title of its own bookmark on the bookmarks toolbar.
  * The extension creates and owns those bookmarks and touches nothing else.
  *
- * Helpers come from lib/unread.js, loaded ahead of this file by the manifest:
- * DEFAULT_SETTINGS, PLACEHOLDER_TITLE, FALLBACK_TITLE, feedUrl, inboxUrl,
- * parseFullcount, formatTitle, describeWatcher, normalizeSettings.
+ * Runs as a service worker in Chromium and as an event page in Firefox. Both
+ * load it as an ES module, so this one file serves both browsers: every
+ * listener below is registered at the top level, which is what lets a worker
+ * that has been shut down come back on the next alarm.
  */
 
-/* global DEFAULT_SETTINGS, PLACEHOLDER_TITLE, FALLBACK_TITLE, feedUrl,
-   inboxUrl, parseFullcount, formatTitle, describeWatcher, normalizeSettings */
+import { browser } from './lib/browser.js';
+import { bookmarksBarId } from './lib/bookmarks-bar.js';
+import {
+  DEFAULT_SETTINGS,
+  PLACEHOLDER_TITLE,
+  FALLBACK_TITLE,
+  feedUrl,
+  inboxUrl,
+  parseFullcount,
+  formatTitle,
+  describeWatcher,
+  normalizeSettings,
+} from './lib/unread.js';
 
-const BOOKMARK_FOLDER_ID = 'toolbar_____'; // Firefox's Bookmarks Toolbar
 const ALARM_NAME = 'poll';
 
 const BADGE_ERROR = '#7f8c8d';
@@ -81,7 +90,7 @@ const ensureBookmark = async (watcher, knownId) => {
   }
 
   const created = await browser.bookmarks.create({
-    parentId: BOOKMARK_FOLDER_ID,
+    parentId: await bookmarksBarId(),
     title: PLACEHOLDER_TITLE,
     url: target,
   });
@@ -170,7 +179,7 @@ const refresh = async () => {
   summarize(watchers, counts);
 };
 
-/** (Re)arms the poll timer. Firefox clamps periods below one minute. */
+/** (Re)arms the poll timer. Browsers clamp periods below one minute. */
 const scheduleAlarm = async () => {
   const { intervalMinutes } = await readSettings();
   await browser.alarms.clear(ALARM_NAME);

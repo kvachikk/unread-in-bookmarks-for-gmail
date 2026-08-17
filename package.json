@@ -2,7 +2,8 @@
   "name": "unread-in-bookmarks-for-gmail",
   "version": "1.1.0",
   "private": true,
-  "description": "Keeps your Gmail unread counts on the Firefox bookmarks toolbar",
+  "type": "module",
+  "description": "Keeps your Gmail unread counts on the bookmarks bar, in Chrome and Firefox",
   "license": "MIT",
   "author": "Vlad Pohorilets",
   "repository": {
@@ -17,13 +18,19 @@
     "node": ">=20.0.0"
   },
   "scripts": {
+    "build": "node tools/build.mjs",
+    "build:chrome": "node tools/build.mjs chrome",
+    "build:firefox": "node tools/build.mjs firefox",
     "lint": "eslint . && prettier --check \"**/*.{js,mjs,json,md,css,html}\" && npm run lint:ext && npm run lint:privacy",
-    "lint:ext": "web-ext lint -s src",
+    "lint:ext": "npm run build:firefox && web-ext lint -s dist/firefox",
     "lint:privacy": "node tools/check-privacy.mjs",
     "fix": "eslint . --fix && prettier --write \"**/*.{js,mjs,json,md,css,html}\"",
     "test": "node --test",
-    "package": "web-ext build -s src -a artifacts --overwrite-dest",
-    "start": "web-ext run -s src",
+    "package": "npm run package:chrome && npm run package:firefox",
+    "package:chrome": "npm run build:chrome && web-ext build -s dist/chrome -a artifacts/chrome --overwrite-dest",
+    "package:firefox": "npm run build:firefox && web-ext build -s dist/firefox -a artifacts/firefox --overwrite-dest",
+    "start": "npm run build:firefox && web-ext run -s dist/firefox",
+    "start:chrome": "npm run build:chrome && web-ext run -t chromium -s dist/chrome",
     "prepare": "husky"
   },
   "lint-staged": {

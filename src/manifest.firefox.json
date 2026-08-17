@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Unread in Bookmarks for Gmail",
+  "version": "1.1.0",
+  "description": "Keeps your Gmail unread count on the bookmarks toolbar, refreshed in the background. Not affiliated with Google.",
+  "homepage_url": "https://github.com/kvachikk/unread-in-bookmarks-for-gmail",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "unread-in-bookmarks-for-gmail@kvachikk.github.io",
+      "strict_min_version": "140.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  },
+
+  "permissions": ["bookmarks", "alarms", "storage"],
+  "host_permissions": ["https://mail.google.com/*"],
+
+  "background": {
+    "scripts": ["background.js"],
+    "type": "module"
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  },
+
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "action": {
+    "default_title": "Gmail unread — click to refresh now",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  }
+}
