@@ -12,8 +12,16 @@ import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 
 const SOURCE_DIR = 'src';
-const MANIFEST_PATH = 'src/manifest.json';
 const SCANNED_EXTENSIONS = ['.js', '.html', '.css'];
+
+/**
+ * Every manifest that ships. Both are checked, so a promise kept in the
+ * Firefox build cannot be quietly dropped from the Chrome one.
+ */
+const MANIFESTS = [
+  { path: 'src/manifest.chrome.json', gecko: false },
+  { path: 'src/manifest.firefox.json', gecko: true },
+];
 
 /** The one origin this extension is allowed to contact. */
 const ALLOWED_ORIGIN = 'https://mail.google.com';
@@ -90,10 +98,10 @@ const scanFile = async (path) => {
   return violations;
 };
 
-const checkManifest = async () => {
-  const manifest = JSON.parse(await readFile(MANIFEST_PATH, 'utf8'));
+const checkManifest = async ({ path, gecko }) => {
+  const manifest = JSON.parse(await readFile(path, 'utf8'));
   const violations = [];
-  const at = (reason, text) => ({ file: MANIFEST_PATH, line: 0, reason, text });
+  const at = (reason, text) => ({ file: path, line: 0, reason, text });
 
   for (const permission of manifest.permissions ?? []) {
     if (!ALLOWED_PERMISSIONS.includes(permission)) {
@@ -122,10 +130,16 @@ const checkManifest = async () => {
   const consent =
     manifest.browser_specific_settings?.gecko?.data_collection_permissions;
   const required = consent?.required ?? [];
-  if (required.length !== 1 || required[0] !== 'none') {
+
+  // Only Firefox has a place to declare this. Chrome asks the same question
+  // on the submission form instead, which PRIVACY.md answers.
+  if (gecko && (required.length !== 1 || required[0] !== 'none')) {
     violations.push(
       at('data collection declared', `required: ${required.join(', ')}`),
     );
+  }
+  if (!gecko && manifest.browser_specific_settings) {
+    violations.push(at('gecko settings in a non-Firefox build', 'removed'));
   }
 
   return violations;
@@ -134,8 +148,8 @@ const checkManifest = async () => {
 const run = async () => {
   const files = await collectFiles(SOURCE_DIR);
   const scanned = await Promise.all(files.map(scanFile));
-  const manifest = await checkManifest();
-  const violations = [...scanned.flat(), ...manifest];
+  const manifests = await Promise.all(MANIFESTS.map(checkManifest));
+  const violations = [...scanned.flat(), ...manifests.flat()];
 
   if (violations.length > 0) {
     console.error('Privacy check failed:\n');

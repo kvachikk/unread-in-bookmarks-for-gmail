@@ -21,17 +21,18 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
-      - run: npx web-ext build -s src -a artifacts --overwrite-dest
+      - run: npm run package
 
-      # Published so anyone can rebuild and compare against the signed add-on.
+      # Published so anyone can rebuild and compare against the store builds.
       - name: Checksum
         run: |
           cd artifacts
-          sha256sum ./*.zip | tee SHA256SUMS
+          sha256sum ./chrome/*.zip ./firefox/*.zip | tee SHA256SUMS
 
       - uses: softprops/action-gh-release@v3
         with:
           files: |
-            artifacts/*.zip
+            artifacts/chrome/*.zip
+            artifacts/firefox/*.zip
             artifacts/SHA256SUMS
           generate_release_notes: true

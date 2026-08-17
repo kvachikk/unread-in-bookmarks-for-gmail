@@ -5,7 +5,9 @@ const [baseConfig] = configMetarhia;
 
 export default [
   {
-    ignores: ['artifacts/*', 'node_modules/*'],
+    // dist/ is a copy of src/ with one manifest swapped in — linting it would
+    // only report every finding twice more.
+    ignores: ['dist/*', 'artifacts/*', 'node_modules/*'],
   },
   {
     ...baseConfig,
@@ -17,18 +19,18 @@ export default [
     },
   },
   {
-    // The extension ships classic scripts sharing one global scope, not
-    // modules — the manifest loads lib/ ahead of the background script.
+    // The extension ships ES modules: both browsers load the background as
+    // `"type": "module"`, and the options page as a module script.
     files: ['src/**/*.js'],
     languageOptions: {
-      sourceType: 'script',
+      sourceType: 'module',
       globals: { ...globals.browser, ...globals.webextensions },
     },
   },
   {
     files: ['test/**/*.js'],
     languageOptions: {
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: { ...globals.node },
     },
   },

@@ -1,7 +1,13 @@
-'use strict';
-
-/* global DEFAULT_WATCHER, DEFAULT_SETTINGS, MAX_ACCOUNT_INDEX, MAX_WATCHERS,
-   formatTitle, describeWatcher, normalizeSettings */
+import { browser } from '../lib/browser.js';
+import {
+  DEFAULT_WATCHER,
+  DEFAULT_SETTINGS,
+  MAX_ACCOUNT_INDEX,
+  MAX_WATCHERS,
+  formatTitle,
+  describeWatcher,
+  normalizeSettings,
+} from '../lib/unread.js';
 
 const mailboxes = document.getElementById('mailboxes');
 const mailboxTemplate = document.getElementById('mailbox-template');
