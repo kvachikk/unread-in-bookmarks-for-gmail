@@ -23,6 +23,17 @@ jobs:
       - run: npm test
       - run: npm run package
 
+      # web-ext names both builds after the manifest, so they collide in the
+      # flat namespace of a release's assets. Name them after the target.
+      - name: Name the builds by target
+        run: |
+          cd artifacts
+          for target in chrome firefox; do
+            for zip in "$target"/*.zip; do
+              mv "$zip" "${zip%.zip}-$target.zip"
+            done
+          done
+
       # Published so anyone can rebuild and compare against the store builds.
       - name: Checksum
         run: |
