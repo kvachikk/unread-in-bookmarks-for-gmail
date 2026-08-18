@@ -9,16 +9,16 @@ bookmarks bar. It renames bookmarks it owns once a minute, so the number is
 just _there_ — no tab to open, no page to refresh. When there is nothing unread
 it says `nothing`.
 
-Runs on Chrome, Edge, Brave and the other Chromium browsers, and on Firefox.
+Runs on Firefox, and on Chrome, Edge, Brave and the other Chromium browsers.
 
 Not affiliated with, endorsed by, or sponsored by Google.
 
 ## Install
 
-- **Chrome and other Chromium browsers** — _(Chrome Web Store link goes here
-  once the listing is live.)_
 - **Firefox** —
   [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/unread-in-bookmarks-for-gmail/)
+- **Chrome and other Chromium browsers** — _(Chrome Web Store link goes here
+  once the listing is live.)_
 
 Or build it yourself:
 
@@ -32,10 +32,10 @@ npm run package        # writes artifacts/{chrome,firefox}/*.zip
 
 To try the source without packaging:
 
-- **Chromium** — `chrome://extensions` → _Developer mode_ → _Load unpacked_ →
-  pick `dist/chrome`.
 - **Firefox** — `about:debugging#/runtime/this-firefox` → _Load Temporary
   Add-on_ → pick `dist/firefox/manifest.json`. Gone on restart.
+- **Chromium** — `chrome://extensions` → _Developer mode_ → _Load unpacked_ →
+  pick `dist/chrome`.
 
 Desktop only. The extension writes to the bookmarks bar, which the mobile
 browsers do not show.
